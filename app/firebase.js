@@ -4,12 +4,12 @@ import { initializeApp } from 'firebase/app'
 import { getStorage } from 'firebase/storage'
 
 const app = initializeApp({
-	apiKey: 'AIzaSyAo0SpEXT-TSDvmWYd4-rJKgu5Num9UBXg',
-	authDomain: 'my-telegram-app-1.firebaseapp.com',
-	projectId: 'my-telegram-app-1',
-	storageBucket: 'my-telegram-app-1.appspot.com',
-	messagingSenderId: '901717268583',
-	appId: '1:901717268583:web:14676d0c2c55c645159cc2',
+	apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+	authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+	projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+	storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+	messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+	appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 })
 
 export const firestore = getFirestore(app)
