@@ -3,7 +3,7 @@ import { firestore } from '@/app/firebase'
 import { collection, getDocs, query } from 'firebase/firestore'
 
 export const initialState = {
-    value: [],
+    data: {},
     loading: null
 }
 
@@ -14,10 +14,14 @@ export const getAllUsersAsync = createAsyncThunk(
             const q = query(collection(firestore, 'users'))
             const querySnapshot = await getDocs(q)
             let usersArr = []
+            let result = {}
             querySnapshot.forEach(doc => {
                 usersArr.push(doc.data())
             })
-            return usersArr
+            usersArr.forEach((user) => {
+                result[user.uid] = user
+            })
+            return result
         }
         catch(error) {
             console.log(error);
@@ -29,9 +33,7 @@ export const AllUsersSlice = createSlice({
     name: "all/users",
     initialState,
     reducers: {
-        addUser: (state,action) => {
-            state.value.push(action.payload)
-        }
+      
     },
 
     extraReducers: (builder) => {
@@ -40,13 +42,12 @@ export const AllUsersSlice = createSlice({
             state.loading = true
         })
         .addCase(getAllUsersAsync.fulfilled,(state,action) => {
-            state.value = action.payload
+            state.data = action.payload
             state.loading = false
         })
     }
 })
 
-export const {addUser} = AllUsersSlice.actions
 
 export const AllUsersSelector = (state) => {
     return state.allUsers

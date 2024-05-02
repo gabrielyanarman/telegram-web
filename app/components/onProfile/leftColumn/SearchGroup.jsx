@@ -1,10 +1,16 @@
+"use client"
+
+import { changeSearchValue } from "@/app/GlobalRedux/Features/LeftColumnSearch/SearchSlice"
+import { useDispatch } from "react-redux"
 
 function SearchGroup({searchIn,setSearchIn}) {
 
+	const dispatch = useDispatch()
     return (
 			<div className='flex gap-2 pl-[13px] pt-1'>
 				<button
 					onClick={() => {
+						dispatch(changeSearchValue(''))
 						setSearchIn('chats')
 					}}
 					className={`${
@@ -17,6 +23,7 @@ function SearchGroup({searchIn,setSearchIn}) {
 				</button>
 				<button
 					onClick={() => {
+						dispatch(changeSearchValue(''))
 						setSearchIn('users')
 					}}
 					className={`${

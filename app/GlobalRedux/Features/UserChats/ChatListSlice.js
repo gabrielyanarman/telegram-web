@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { collection, getDocs, query, where } from "firebase/firestore"
 
 export const initialState = {
-    value: [],
+    data: {},
     loading: false
 }
 
@@ -14,8 +14,12 @@ export const getChatsForUserAsync = createAsyncThunk(
             const q = query(collection(firestore, 'chats'), where('participants', 'array-contains', uid))
             const querySnapshot = await getDocs(q)
             let userChats = [];
+            let result = {}
             querySnapshot.forEach(chat => userChats.push(chat.data()))
-            return userChats
+            userChats.forEach((chat) => {
+                result[chat.chatId] = chat
+            })
+            return result
         }
         catch (error) {
             console.log(error)
@@ -38,7 +42,7 @@ export const ChatListSlice = createSlice({
             })
             .addCase(getChatsForUserAsync.fulfilled,(state,action) => {
                 state.loading = false
-                state.value = action.payload
+                state.data = action.payload
             })
     }
 })
