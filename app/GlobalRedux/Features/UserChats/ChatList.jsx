@@ -22,7 +22,7 @@ function ChatList() {
 					<div className='w-full flex justify-center pt-10'>
 						<Loader />
 					</div>
-				) : Object.keys(userChats.data).value ? (
+				) : Object.keys(userChats.data).length ? (
 					Object.values(userChats.data).map(chat => {
 						const uid = chat.participants.find(uid => uid != thisUser.uid)
 						const user = users.data[uid]
