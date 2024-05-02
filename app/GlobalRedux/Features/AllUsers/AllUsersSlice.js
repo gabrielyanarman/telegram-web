@@ -10,13 +10,18 @@ export const initialState = {
 export const getAllUsersAsync = createAsyncThunk(
     'get/users',
     async () => {
-        const q = query(collection(firestore, 'users'))
-        const querySnapshot = await getDocs(q)
-        let usersArr = []
-        querySnapshot.forEach(doc => {
-			usersArr.push(doc.data())
-		})
-        return usersArr
+        try {
+            const q = query(collection(firestore, 'users'))
+            const querySnapshot = await getDocs(q)
+            let usersArr = []
+            querySnapshot.forEach(doc => {
+                usersArr.push(doc.data())
+            })
+            return usersArr
+        }
+        catch(error) {
+            console.log(error);
+        }
     }
 )
 

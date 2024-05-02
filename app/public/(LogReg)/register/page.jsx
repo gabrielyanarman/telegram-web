@@ -89,7 +89,6 @@ export default function Register() {
 		catch(error) {
 			setLoading(false)
 			console.log(error)
-			setError(error.message)
 		}
 	}
 
