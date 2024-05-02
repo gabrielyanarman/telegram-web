@@ -13,7 +13,6 @@ function LogRegHeader() {
 	const [selected,setSelected] = useState('login')
 	const pahtName = usePathname()
 	const [user] = useAuthState(auth)
-	console.log(user);
 	
 	useEffect(() => {
 		const parts = pahtName.split('/')

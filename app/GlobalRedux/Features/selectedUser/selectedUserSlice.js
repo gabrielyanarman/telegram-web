@@ -9,20 +9,20 @@ export const initialState = {
 	photoURL: null,
 }
 
-export const userSlice = createSlice({
-	name: 'user',
+export const selectedUserSlice = createSlice({
+	name: 'selectedUser',
 
 	initialState,
 
 	reducers: {
-		setUser: (state, action) => {
+		setSelectedUser: (state, action) => {
 			state.uid = action.payload.uid
 			state.displayName = action.payload.displayName
 			state.email = action.payload.email
 			state.photoURL = action.payload.image
 		},
 
-		removeUser: (state) => {
+		removeSelectedUser: (state) => {
 			state.uid = null
 			state.displayName = null
 			state.email = null
@@ -31,10 +31,10 @@ export const userSlice = createSlice({
 	},
 })
 
-export const { setUser, removeUser} = userSlice.actions
+export const { setSelectedUser, removeSelectedUser} = selectedUserSlice.actions
 
-export function userSelector(state) {
-    return state.user
+export function selectedUserSelector(state) {
+    return state.selectedUser
 }
 
-export default userSlice.reducer
+export default selectedUserSlice.reducer
