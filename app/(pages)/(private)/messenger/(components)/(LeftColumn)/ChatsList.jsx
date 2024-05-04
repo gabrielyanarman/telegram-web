@@ -1,18 +1,20 @@
 'use client'
+
 import { useSelector } from 'react-redux'
-import ChatItem from '../(components)/(LeftColumn)/ChatItem'
+import ChatItem from './ChatItem'
 import { chatsSelector } from '@/app/redux/slices/chatsSlice'
 import Loader from '@/app/components/Loader'
 import { usersSelector } from '@/app/redux/slices/usersSlice'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '@/app/firebase'
-import { searchValueSelector } from '@/app/redux/slices/searchSlice'
+import { searchStateSelector } from '@/app/redux/slices/searchSlice'
 
-export default function ChatsListLayout({ children }) {
+function ChatsList() {
+    
 	const users = useSelector(usersSelector)
 	const [thisUser] = useAuthState(auth)
 	const chats = useSelector(chatsSelector)
-	const searchValue = useSelector(searchValueSelector).value
+	const searchValue = useSelector(searchStateSelector).value
 
 	return (
 		<>
@@ -27,7 +29,7 @@ export default function ChatsListLayout({ children }) {
 					return user.displayName
 						.toLowerCase()
 						.includes(searchValue.toLowerCase()) ? (
-							<ChatItem key={chat.chatId} user={user} chat={chat} />
+						<ChatItem key={chat.chatId} user={user} chat={chat} />
 					) : null
 				})
 			) : (
@@ -38,3 +40,7 @@ export default function ChatsListLayout({ children }) {
 		</>
 	)
 }
+
+export default ChatsList
+
+

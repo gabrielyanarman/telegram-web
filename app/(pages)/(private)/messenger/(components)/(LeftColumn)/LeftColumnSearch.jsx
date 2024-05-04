@@ -1,11 +1,11 @@
 'use client'
 
 import { useDispatch, useSelector } from "react-redux"
-import { changeSearchValue, searchValueSelector } from "@/app/redux/slices/searchSlice"
+import { changeSearchValue, searchStateSelector } from "@/app/redux/slices/searchSlice"
 
 function LeftColumnSearch({inputFocus,setInputFocus}) {
     const dispatch = useDispatch()
-    const searchValue = useSelector(searchValueSelector).value
+    const searchValue = useSelector(searchStateSelector).value
     return (
 			<div className='flex justify-center relative'>
 				<svg

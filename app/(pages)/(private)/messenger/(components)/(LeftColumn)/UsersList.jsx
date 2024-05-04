@@ -5,12 +5,12 @@ import ChatItem from './ChatItem'
 import Loader from '@/app/components/Loader'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '@/app/firebase'
-import { searchValueSelector } from '@/app/redux/slices/searchSlice'
+import { searchStateSelector } from '@/app/redux/slices/searchSlice'
 
 function UsersList() {
 	const users = useSelector(usersSelector)
 	const [thisUser] = useAuthState(auth)
-	const searchValue = useSelector(searchValueSelector).value
+	const searchValue = useSelector(searchStateSelector).value
 
 	return (
 		<>

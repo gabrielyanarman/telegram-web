@@ -8,6 +8,7 @@ import { chatsSelector, getChatsForUserAsync } from "@/app/redux/slices/chatsSli
 import Avatar from '@/app/components/Avatar'
 import { findParticipantUser } from "@/app/utils/functions"
 import { usersSelector } from "@/app/redux/slices/usersSlice"
+import { changeSearchTab, searchStateSelector } from "@/app/redux/slices/searchSlice"
 
 function ChatItem({user, chat}) {
 
@@ -18,6 +19,7 @@ function ChatItem({user, chat}) {
 	const pathName = usePathname()
 	const users = useSelector(usersSelector)
 	const chats = useSelector(chatsSelector)
+	const searchTab = useSelector(searchStateSelector).searchTab
 
 	const addChatOnCollection = async (user1Id, user2Id) => {
 		const chatId = `${user1Id}-${user2Id}`.split('').sort().join('')
@@ -42,21 +44,23 @@ function ChatItem({user, chat}) {
 			<div
 				className={`${
 					(selectedUser.uid == user.uid) &&
-					pathName.includes('messenger/chats')
+					searchTab == 'chats'
 						? 'bg-[#3390EC] hover:bg-[#3390EC]'
 						: 'hover:bg-gray-100'
 				} pt-3 px-2 pb-2 rounded-2xl transition-all duration-300 cursor-pointer`}
 				onClick={e => {
 					e.preventDefault()
 					if (chat) {
-						router.push(`/private/messenger/chats/:${chat.chatId}`)
+						router.push(`/messenger/chats/:${chat.chatId}`)
 					} else {
 						addChatOnCollection(
 							thisUser.uid,
 							user.uid
 						)
 						const chatId = `${thisUser.uid}-${user.uid}`.split('').sort().join('')
-						router.push(`/private/messenger/chats/:${chatId}`)
+						router.push(`/messenger/chats/:${chatId}`)
+						setSelectedUser(user)
+						dispatch(changeSearchTab('chats'))
 					}
 				}}
 			>
@@ -68,7 +72,7 @@ function ChatItem({user, chat}) {
 						<span
 							className={`${
 								(selectedUser.uid == user.uid) &&
-								pathName.includes('messenger/chats')
+								searchTab == 'chats'
 									? 'text-white'
 									: null
 							} font-semibold transition-all duration-300`}

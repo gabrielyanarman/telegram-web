@@ -73,7 +73,7 @@ function AuthHeader() {
 					</div>
 				) : (
 					<div className='flex gap-5 justify-center items-center'>
-						<Link href='/public/register'>
+						<Link href='/register'>
 							<button
 								className={`transition-all duration-300 px-3 py-2 text-[15px] rounded-lg font-semibold border border-slate-500 ${
 									selected == 'register'
@@ -94,7 +94,7 @@ function AuthHeader() {
 								</span>
 							</button>
 						</Link>
-						<Link href='/public/login'>
+						<Link href='/login'>
 							<button
 								className={`transition-all duration-300 px-3 py-2 text-[15px] rounded-lg font-semibold border border-slate-500 ${
 									selected == 'login'

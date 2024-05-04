@@ -1,22 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 export const initialState = {
-    value: ''
+    value: '',
+    searchTab: 'chats'
 }
 
 export const searchSlice = createSlice({
-    name: 'leftColumnSearch',
+    name: 'left/column/Search',
     initialState,
     reducers: {
         changeSearchValue: (state,action) => {
             state.value = action.payload
+        },
+        changeSearchTab: (state,action) => {
+            state.searchTab = action.payload
         }
     }
 })
 
-export const {changeSearchValue} = searchSlice.actions
+export const {changeSearchValue, changeSearchTab} = searchSlice.actions
 
-export const searchValueSelector = (state) => {
+export const searchStateSelector = (state) => {
     return state.leftSearch
 }
 

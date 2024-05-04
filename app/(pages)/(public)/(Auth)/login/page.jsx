@@ -14,7 +14,7 @@ export default function LogIn() {
 	const [user] = useAuthState(auth)
 
 	useEffect(() => {
-		if(user) router.push('/private/messenger/chats')
+		if(user) router.push('/messenger/chats')
 	})
 
 	const [loginData,setLoginData] = useState({
@@ -34,7 +34,7 @@ export default function LogIn() {
 		setLoading(true)
 		try {
 			await signInWithEmailAndPassword(auth,loginData.email,loginData.password)
-			router.push('/private/messenger/chats')
+			router.push('/messenger/chats')
 		}
 		catch(error) {
 			setLoading(false)
