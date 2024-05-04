@@ -83,7 +83,7 @@ export default function Register() {
 				photoURL,
 			})
 			await addUserOnCollection(user)
-			router.push('/private/messenger')
+			router.push('/private/messenger/chats')
 			setNewUser(emptyUser)
 		}
 		catch(error) {

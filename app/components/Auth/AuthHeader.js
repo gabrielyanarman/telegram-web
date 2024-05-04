@@ -37,7 +37,7 @@ function AuthHeader() {
 			<div className='w-full flex justify-between pb-4 border-b items-center'>
 				<div className='self-start cursor-pointer flex gap-3 justify-center items-center'>
 					<img
-						src='../../images/telegram.png'
+						src='https://firebasestorage.googleapis.com/v0/b/my-telegram-app-1.appspot.com/o/users%2Flogo.jpg?alt=media&token=046ff22c-12a1-486a-9d85-69e35cfd5cd6'
 						className='w-12 h-12'
 						alt='logo'
 					/>

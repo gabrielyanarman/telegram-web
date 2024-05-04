@@ -4,6 +4,7 @@ import selectedUserReducer from '../slices/selectedUserSlice'
 import usersReducer from '../slices/usersSlice'
 import chatsReducer from '../slices/chatsSlice'
 import leftSearchReducer from '../slices/searchSlice'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 const { configureStore } = require('@reduxjs/toolkit')
 
@@ -14,4 +15,7 @@ export const store = configureStore({
 		chats: chatsReducer,
 		leftSearch: leftSearchReducer,
 	},
+	middleware: getDefaultMiddleware =>
+		getDefaultMiddleware().concat(),
+	devTools: process.env.NODE_ENV !== 'production',
 })
