@@ -1,40 +1,40 @@
-'use client'
+'use client';
 
-const { createSlice } = require('@reduxjs/toolkit')
+const { createSlice } = require('@reduxjs/toolkit');
 
 export const initialState = {
-	uid: null,
-	displayName: null,
-	email: null,
-	photoURL: null,
-}
+  uid: null,
+  displayName: null,
+  email: null,
+  photoURL: null,
+};
 
 export const selectedUserSlice = createSlice({
-	name: 'selected/user',
+  name: 'selected/user',
 
-	initialState,
+  initialState,
 
-	reducers: {
-		selectUser: (state, action) => {
-			state.uid = action.payload.uid
-			state.displayName = action.payload.displayName
-			state.email = action.payload.email
-			state.photoURL = action.payload.image
-		},
+  reducers: {
+    selectUser: (state, action) => {
+      state.uid = action.payload.uid;
+      state.displayName = action.payload.displayName;
+      state.email = action.payload.email;
+      state.photoURL = action.payload.image;
+    },
 
-		removeSelectedUser: (state) => {
-			state.uid = null
-			state.displayName = null
-			state.email = null
-			state.photoURL = null
-		},
-	},
-})
+    removeSelectedUser: (state) => {
+      state.uid = null;
+      state.displayName = null;
+      state.email = null;
+      state.photoURL = null;
+    },
+  },
+});
 
-export const { selectUser, removeSelectedUser} = selectedUserSlice.actions
+export const { selectUser, removeSelectedUser } = selectedUserSlice.actions;
 
 export function selectedUserSelector(state) {
-    return state.selectedUser
+  return state.selectedUser;
 }
 
-export default selectedUserSlice.reducer
+export default selectedUserSlice.reducer;
