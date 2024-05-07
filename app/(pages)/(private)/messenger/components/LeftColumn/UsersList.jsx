@@ -9,12 +9,12 @@ import { searchStateSelector } from '@/app/redux/slices/searchSlice';
 
 function UsersList() {
   const users = useSelector(usersSelector);
-  const [thisUser] = useAuthState(auth);
+  const [thisUser, thisUserLoading] = useAuthState(auth);
   const searchValue = useSelector(searchStateSelector).value;
 
   return (
     <>
-      {users.loading ? (
+      {users.loading || thisUserLoading ? (
         <div className="w-full flex justify-center pt-10">
           <Loader />
         </div>

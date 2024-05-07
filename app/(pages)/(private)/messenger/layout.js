@@ -19,9 +19,10 @@ export default function MessengerLayout({ children }) {
   const searchTab = useSelector(searchStateSelector).searchTab;
 
   useEffect(() => {
+    if (!user) return;
     dispatch(getUsersAsync());
     !loading && dispatch(getChatsForUserAsync(user.uid));
-  }, [loading]);
+  }, [user]);
 
   if (user === null || loading) {
     return (
@@ -35,10 +36,8 @@ export default function MessengerLayout({ children }) {
       <div className="my-shadow-r w-1/4 h-full flex flex-col relative">
         <LeftColumnHeader />
         <SearchGroup />
-        <div className="overflow-y-auto">
-          <div className="py-3 px-2 flex flex-col gap-1">
-            {searchTab == 'users' ? <UsersList /> : <ChatsList />}
-          </div>
+        <div className="chatList transition-all duration-300 overflow-y-scroll py-3 pl-2 pr-1 mr-[1px] flex flex-col gap-1 relative">
+          {searchTab == 'users' ? <UsersList /> : <ChatsList />}
         </div>
       </div>
       <MiddleColumn />

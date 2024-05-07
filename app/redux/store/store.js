@@ -11,7 +11,7 @@ export const store = configureStore({
   reducer: {
     selectedUser: selectedUserReducer,
     users: usersReducer,
-    chats: chatsReducer,
+    /*chats: chatsReducer,*/
     leftSearch: leftSearchReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
