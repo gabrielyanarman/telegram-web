@@ -8,23 +8,21 @@ import Loader from '@/app/components/Loader';
 import SearchGroup from './components/LeftColumn/SearchGroup';
 import LeftColumnHeader from './components/LeftColumn/LeftColumnHeader';
 import { getUsersAsync } from '@/app/redux/slices/usersSlice';
-import { getChatsForUserAsync } from '@/app/redux/slices/chatsSlice';
 import { searchStateSelector } from '@/app/redux/slices/searchSlice';
 import UsersList from './components/LeftColumn/UsersList';
 import ChatsList from './components/LeftColumn/ChatsList';
 
 export default function MessengerLayout({ children }) {
   const dispatch = useDispatch();
-  const [user, loading] = useAuthState(auth);
+  const [currentUser, loading] = useAuthState(auth);
   const searchTab = useSelector(searchStateSelector).searchTab;
 
   useEffect(() => {
-    if (!user) return;
+    if (!currentUser) return;
     dispatch(getUsersAsync());
-    !loading && dispatch(getChatsForUserAsync(user.uid));
-  }, [user]);
+  }, [currentUser]);
 
-  if (user === null || loading) {
+  if (!currentUser || loading) {
     return (
       <div className="w-full min-h-96 flex justify-center items-center">
         <Loader />

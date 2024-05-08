@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${inter.className} min-h-screen`}>
-        <div className="flex flex-col mx-auto max-w-[90%] pt-3">
+        <div className="flex flex-col mx-auto max-w-[100%] pt-3">
           <Providers>
             <AuthHeader />
             {children}

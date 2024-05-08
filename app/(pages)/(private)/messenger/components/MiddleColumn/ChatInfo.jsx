@@ -2,32 +2,31 @@ import Avatar from '@/app/components/Avatar';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, firestore } from '@/app/firebase';
 import { usePathname } from 'next/navigation';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { usersSelector } from '@/app/redux/slices/usersSlice';
 import { useEffect, useState } from 'react';
-import { findParticipantUser } from '@/app/utils/helpers';
-import { chatsSelector } from '@/app/redux/slices/chatsSlice';
+import { findParticipantUser, getChatId } from '@/app/utils/helpers';
 import { collection, query, where } from 'firebase/firestore';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 function ChatInfo() {
   const [user, setUser] = useState(null);
-  const [thisUser] = useAuthState(auth);
+  const [currentUser] = useAuthState(auth);
   const pathName = usePathname();
   const users = useSelector(usersSelector);
   const chatsRef = collection(firestore, 'chats');
   const q = query(
     chatsRef,
-    where('participants', 'array-contains', thisUser.uid),
+    where('participants', 'array-contains', currentUser.uid),
   );
   const [chats, loading, error] = useCollectionData(q);
 
   useEffect(() => {
     if (loading || error) return;
-    const lastPartPath = pathName.split('/:').at(-1);
-    const openedChat = chats.find((chat) => chat.chatId == lastPartPath);
+    const chatId = getChatId(pathName);
+    const openedChat = chats.find((chat) => chat.chatId == chatId);
     if (!openedChat) return;
-    const user = findParticipantUser(thisUser, openedChat, users);
+    const user = findParticipantUser(currentUser, openedChat, users);
     setUser(user);
   }, [pathName, chats, users.loading, loading]);
 

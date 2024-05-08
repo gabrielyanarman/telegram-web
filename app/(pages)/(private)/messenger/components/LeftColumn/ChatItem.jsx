@@ -5,10 +5,11 @@ import { useCallback, useEffect, useState } from 'react';
 import { collection, doc, query, setDoc, where } from 'firebase/firestore';
 import { auth, firestore } from '@/app/firebase';
 import Avatar from '@/app/components/Avatar';
-import { findParticipantUser, getTime } from '@/app/utils/helpers';
+import { findParticipantUser, getChatId, getTime } from '@/app/utils/helpers';
 import { usersSelector } from '@/app/redux/slices/usersSlice';
 import {
   changeSearchTab,
+  changeSearchValue,
   searchStateSelector,
 } from '@/app/redux/slices/searchSlice';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
@@ -19,27 +20,27 @@ function ChatItem({ user }) {
   const [lastMessage, setLastMessage] = useState({});
   const router = useRouter();
   const dispatch = useDispatch();
-  const [thisUser, thisUserLoading] = useAuthState(auth);
+  const [currentUser, currentUserLoading] = useAuthState(auth);
 
   const pathName = usePathname();
   const users = useSelector(usersSelector);
   const chatsRef = collection(firestore, 'chats');
   const q = query(
     chatsRef,
-    where('participants', 'array-contains', thisUser.uid),
+    where('participants', 'array-contains', currentUser.uid),
   );
   const [chats, chatsLoading, error] = useCollectionData(q);
   const searchTab = useSelector(searchStateSelector).searchTab;
 
   useEffect(() => {
-    if (users.loading || chatsLoading || thisUserLoading || error) return;
-    const chatId = `${thisUser.uid}-${user.uid}`.split('').sort().join('');
+    if (users.loading || chatsLoading || currentUserLoading || error) return;
+    const chatId = `${currentUser.uid}-${user.uid}`.split('').sort().join('');
     const chat = chats.find((chat) => chat.chatId == chatId);
     chat ? setChatWithUser(chat) : setChatWithUser(null);
-  }, [user, thisUser, chats]);
+  }, [user, currentUser, chats]);
 
   useEffect(() => {
-    if (users.loading || chatsLoading || thisUserLoading || error) return;
+    if (users.loading || chatsLoading || currentUserLoading || error) return;
     if (!chatWithUser || !chatWithUser.lastMessage) return;
     setLastMessage({
       text: chatWithUser.lastMessage,
@@ -48,13 +49,13 @@ function ChatItem({ user }) {
   }, [chatWithUser]);
 
   useEffect(() => {
-    if (chatsLoading || thisUserLoading) return;
-    const lastPartPath = pathName.split('/:').at(-1);
-    const openedChat = chats.find((chat) => chat.chatId == lastPartPath);
+    if (chatsLoading || currentUserLoading) return;
+    const chatId = getChatId(pathName);
+    const openedChat = chats.find((chat) => chat.chatId == chatId);
     if (!openedChat) return;
-    const user = findParticipantUser(thisUser, openedChat, users);
+    const user = findParticipantUser(currentUser, openedChat, users);
     setSelectedUser(user);
-  }, [pathName, users.loading, chatsLoading, thisUserLoading]);
+  }, [pathName, users.loading, chatsLoading, currentUserLoading]);
 
   const addChatOnCollection = useCallback(
     async (user1Id, user2Id) => {
@@ -64,6 +65,10 @@ function ChatItem({ user }) {
         participants: [user1Id, user2Id],
         lastMessage: null,
         lastMessageTime: null,
+        newMessages: {
+          count: 0,
+          sender: null,
+        },
       });
     },
     [firestore],
@@ -75,36 +80,38 @@ function ChatItem({ user }) {
         selectedUser.uid == user.uid && searchTab == 'chats'
           ? 'bg-[#3390EC] hover:bg-[#3390EC]'
           : 'hover:bg-gray-100'
-      } px-2 py-3 rounded-2xl transition-all duration-300 cursor-pointer w-[90%]`}
+      } px-2 py-3 rounded-2xl transition-all duration-300 cursor-pointer w-[100%] relative`}
       onClick={(e) => {
         e.preventDefault();
         if (chatWithUser) {
           router.push(`/messenger/chats/:${chatWithUser.chatId}`);
           dispatch(changeSearchTab('chats'));
+          dispatch(changeSearchValue(''));
         } else {
-          addChatOnCollection(thisUser.uid, user.uid);
-          const chatId = `${thisUser.uid}-${user.uid}`
+          addChatOnCollection(currentUser.uid, user.uid);
+          const chatId = `${currentUser.uid}-${user.uid}`
             .split('')
             .sort()
             .join('');
           router.push(`/messenger/chats/:${chatId}`);
           setSelectedUser(user);
           dispatch(changeSearchTab('chats'));
+          dispatch(changeSearchValue(''));
         }
       }}
     >
-      <div className="flex w-full gap-4">
-        <div>
+      <div className="flex justify-between pr-3 max-w-full">
+        <div className="w-1/6">
           <Avatar url={user.photoURL} width={12} height={12} />
         </div>
-        <div className="flex flex-col gap-2 justify-center items-start w-full relative truncate">
+        <div className="flex flex-col gap-2 justify-center items-start w-5/6">
           <div className="flex justify-between w-full items-center">
             <span
               className={`${
                 selectedUser.uid == user.uid &&
                 searchTab == 'chats' &&
                 'text-white'
-              } font-semibold transition-all duration-300`}
+              } font-bold transition-all duration-300`}
             >
               {user.displayName}
             </span>
@@ -117,10 +124,22 @@ function ChatItem({ user }) {
             )}
           </div>
           {searchTab == 'chats' && (
-            <div
-              className={`${selectedUser.uid == user.uid ? 'text-slate-100' : 'text-gray-500'} text-sm font-semibold pr-8 whitespace-nowrap`}
-            >
-              {lastMessage.text || ''}
+            <div className="w-full flex justify-between gap-2">
+              <p
+                className={`${selectedUser.uid == user.uid ? 'text-slate-100' : 'text-gray-500'} text-sm max-w-full font-semibold inline-block whitespace-nowrap truncate`}
+              >
+                {lastMessage.text || ''}
+              </p>
+              {chatWithUser &&
+                chatWithUser.newMessages.sender != currentUser.uid &&
+                user.uid != selectedUser.uid &&
+                chatWithUser.newMessages.count > 0 && (
+                  <div className="rounded-full min-w-6 min-h-6 bg-[#27b127] flex justify-center items-center">
+                    <span className="text-[15px] font-semibold text-white">
+                      {chatWithUser.newMessages.count}
+                    </span>
+                  </div>
+                )}
             </div>
           )}
         </div>

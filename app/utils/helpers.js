@@ -35,3 +35,7 @@ export function getTime(dateNow) {
     return hours + ':' + minutes;
   }
 }
+
+export function getChatId(url) {
+  return url.split('/:').at(-1);
+}

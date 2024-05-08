@@ -7,9 +7,12 @@ import {
   query,
   where,
 } from 'firebase/firestore';
+import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 
 function HeaderActions({ openedChat }) {
+  const router = useRouter();
+
   const deleteChat = useCallback(async (chatId) => {
     await deleteDoc(doc(firestore, `chats/${chatId}`));
     const messagesRef = collection(firestore, 'messages');
@@ -28,6 +31,7 @@ function HeaderActions({ openedChat }) {
           const sure = confirm('Do you want delete this chat ?');
           if (!sure) return;
           deleteChat(openedChat.chatId);
+          router.push('/messenger/chats');
         }}
       >
         <svg

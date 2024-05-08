@@ -9,9 +9,9 @@ const { configureStore } = require('@reduxjs/toolkit');
 
 export const store = configureStore({
   reducer: {
-    selectedUser: selectedUserReducer,
+    // selectedUser: selectedUserReducer,
     users: usersReducer,
-    /*chats: chatsReducer,*/
+    // chats: chatsReducer,
     leftSearch: leftSearchReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),

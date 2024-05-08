@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import Message from './Message';
 import {
   addDoc,
   collection,
   doc,
+  getDoc,
   orderBy,
   query,
   updateDoc,
@@ -14,15 +15,17 @@ import { auth, firestore } from '@/app/firebase';
 import { usePathname } from 'next/navigation';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Loader from '@/app/components/Loader';
+import { getChatId } from '@/app/utils/helpers';
 
 function Messages() {
   const [valueArea, setValueArea] = useState('');
-  const [thisUser, loadingThisUser] = useAuthState(auth);
+  const [currentUser] = useAuthState(auth);
+  const textAreaRef = useRef(null);
   const pathName = usePathname();
-  const chatId = pathName.split('/:').at(-1);
-  const collectionRef = collection(firestore, 'messages');
+  const chatId = getChatId(pathName);
+  const messagesRef = collection(firestore, 'messages');
   const q = query(
-    collectionRef,
+    messagesRef,
     where('chatId', '==', chatId),
     orderBy('createdAt'),
   );
@@ -31,18 +34,35 @@ function Messages() {
   const sendMessage = useCallback(async () => {
     if (!valueArea.length) return;
     const timer = Date.now();
-    await addDoc(collectionRef, {
+    await addDoc(messagesRef, {
       text: valueArea,
       chatId: chatId,
-      uid: thisUser.uid,
+      uid: currentUser.uid,
       createdAt: timer,
     });
     const chatRef = doc(firestore, `chats/${chatId}`);
+    const docSnap = await getDoc(chatRef);
     await updateDoc(chatRef, {
       lastMessage: valueArea,
       lastMessageTime: timer,
+      newMessages: {
+        count: docSnap.data().newMessages.count + 1,
+        sender: currentUser.uid,
+      },
     });
-  }, [thisUser, pathName, valueArea, collectionRef]);
+  }, [currentUser, pathName, valueArea, messagesRef]);
+
+  const updateNewMessages = useCallback(async () => {
+    const chatRef = doc(firestore, `chats/${chatId}`);
+    const docSnap = await getDoc(chatRef);
+    if (currentUser.uid == docSnap.data().newMessages.sender) return;
+    await updateDoc(chatRef, {
+      newMessages: {
+        count: 0,
+        sender: docSnap.data().newMessages.sender,
+      },
+    });
+  }, []);
 
   useEffect(() => {
     if (messagesLoading) return;
@@ -50,6 +70,8 @@ function Messages() {
     messengerContainer.scrollTo({
       top: messengerContainer.scrollHeight,
     });
+    textAreaRef.current.style.height = 'auto';
+    updateNewMessages();
   }, [messages, pathName]);
 
   if (error) {
@@ -65,10 +87,12 @@ function Messages() {
         >
           <div className="w-4/6 flex flex-col gap-2 items-start">
             {messagesLoading ? (
-              <Loader />
+              <div className="flex justify-center items-center min-h-[450px] w-full">
+                <Loader />
+              </div>
             ) : messages.length ? (
               messages.map((message) => (
-                <Message key={message.id} message={message} />
+                <Message key={message.lastMessageTime} message={message} />
               ))
             ) : (
               <span className="text-gray-600 text-lg font-semibold fixed top-1/2 left-1/2 translate-y-1/2 translate-x-1/2 z-20">
@@ -88,20 +112,25 @@ function Messages() {
             }}
           >
             <textarea
+              ref={textAreaRef}
               type="text"
               placeholder="Message"
-              className={`min-h-12 w-[90%] overflow-hidden rounded-xl focus:outline-none py-4 px-3 resize-none`}
+              className={`min-h-12 w-[90%] overflow-y-auto rounded-xl focus:outline-none py-4 px-3 resize-none text_area`}
               value={valueArea}
               onChange={(event) => {
                 setValueArea(event.target.value);
                 event.target.style.height = 'auto';
-                event.target.style.height = event.target.scrollHeight + 'px';
+                event.target.scrollHeight > 270
+                  ? (event.target.style.height = 270 + 'px')
+                  : (event.target.style.height =
+                      event.target.scrollHeight + 'px');
               }}
               onKeyDown={(event) => {
                 if (event.key === 'Enter' && !event.shiftKey) {
                   event.preventDefault();
                   sendMessage();
                   setValueArea('');
+                  event.target.style.height = 'auto';
                 }
               }}
             />

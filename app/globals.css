@@ -22,8 +22,6 @@
   background-position: center;
 }
 
-/*bg-gradient-to-tl from-green-400 to-green-500*/
-
 ::-webkit-scrollbar {
   width: 5px; 
   height: 8px; 
@@ -70,4 +68,10 @@
 .messages-container:hover.messages-container::-webkit-scrollbar-thumb {
   background-color: rgba(40, 150, 80, 0.6);
   max-height: 50px;
+}
+
+.text_area::-webkit-scrollbar-thumb {
+  transition: background-color 0.3s ease;
+  background-color: #bebdbd; 
+  border-radius: 4px; 
 }

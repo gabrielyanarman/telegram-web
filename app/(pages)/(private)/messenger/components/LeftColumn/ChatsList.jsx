@@ -2,7 +2,6 @@
 
 import { useSelector } from 'react-redux';
 import ChatItem from './ChatItem';
-import { chatsSelector } from '@/app/redux/slices/chatsSlice';
 import Loader from '@/app/components/Loader';
 import { usersSelector } from '@/app/redux/slices/usersSlice';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -13,11 +12,11 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 function ChatsList() {
   const users = useSelector(usersSelector);
-  const [thisUser] = useAuthState(auth);
+  const [currentUser] = useAuthState(auth);
   const chatsRef = collection(firestore, 'chats');
   const q = query(
     chatsRef,
-    where('participants', 'array-contains', thisUser.uid),
+    where('participants', 'array-contains', currentUser.uid),
     orderBy('lastMessageTime', 'desc'),
   );
   const [chatsData, chatsLoading, error] = useCollectionData(q);
@@ -36,7 +35,7 @@ function ChatsList() {
         </div>
       ) : chatsData.length ? (
         chatsData.map((chat) => {
-          const uid = chat.participants.find((uid) => uid != thisUser.uid);
+          const uid = chat.participants.find((uid) => uid != currentUser.uid);
           const user = users.data[uid];
           return user.displayName
             .toLowerCase()

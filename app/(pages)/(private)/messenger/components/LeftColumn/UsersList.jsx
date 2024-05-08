@@ -9,18 +9,18 @@ import { searchStateSelector } from '@/app/redux/slices/searchSlice';
 
 function UsersList() {
   const users = useSelector(usersSelector);
-  const [thisUser, thisUserLoading] = useAuthState(auth);
+  const [currentUser, currentUserLoading] = useAuthState(auth);
   const searchValue = useSelector(searchStateSelector).value;
 
   return (
     <>
-      {users.loading || thisUserLoading ? (
+      {users.loading || currentUserLoading ? (
         <div className="w-full flex justify-center pt-10">
           <Loader />
         </div>
       ) : Object.keys(users.data).length > 1 ? (
         Object.values(users.data).map((user) => {
-          return user.uid === thisUser.uid ||
+          return user.uid === currentUser.uid ||
             !user.displayName
               .toLowerCase()
               .includes(searchValue.toLowerCase()) ? null : (
