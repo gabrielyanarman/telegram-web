@@ -9,9 +9,12 @@ import { auth, firestore } from '@/app/firebase';
 import { searchStateSelector } from '@/app/redux/slices/searchSlice';
 import { collection, orderBy, query, where } from 'firebase/firestore';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useEffect, useState } from 'react';
+import { useGetUser } from '@/app/utils/hooks';
 
 function ChatsList() {
-  const users = useSelector(usersSelector);
+  const [chatItems, setChatItems] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [currentUser] = useAuthState(auth);
   const chatsRef = collection(firestore, 'chats');
   const q = query(
@@ -22,6 +25,34 @@ function ChatsList() {
   const [chatsData, chatsLoading, error] = useCollectionData(q);
   const searchValue = useSelector(searchStateSelector).value;
 
+  useEffect(() => {
+    if (chatsData) {
+      const promises = chatsData.map(async (chat) => {
+        const uid = chat.participants.find((uid) => uid !== currentUser.uid);
+        const user = await useGetUser(uid);
+        return { chat, user };
+      });
+
+      Promise.all(promises)
+        .then((results) => {
+          const filteredChatItems = results
+            .filter(({ user }) =>
+              user.displayName
+                .toLowerCase()
+                .includes(searchValue.toLowerCase()),
+            )
+            .map(({ chat, user }) => (
+              <ChatItem key={chat.chatId} user={user} />
+            ));
+          setChatItems(filteredChatItems);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [chatsData, currentUser.uid, searchValue]);
+
   if (error) {
     console.log(error);
     return;
@@ -29,23 +60,15 @@ function ChatsList() {
 
   return (
     <>
-      {chatsLoading ? (
+      {chatsLoading || loading ? (
         <div className="w-full flex justify-center pt-10">
           <Loader />
         </div>
-      ) : chatsData.length ? (
-        chatsData.map((chat) => {
-          const uid = chat.participants.find((uid) => uid != currentUser.uid);
-          const user = users.data[uid];
-          return user.displayName
-            .toLowerCase()
-            .includes(searchValue.toLowerCase()) ? (
-            <ChatItem key={chat.chatId} user={user} />
-          ) : null;
-        })
+      ) : chatItems.length ? (
+        chatItems
       ) : (
         <div className="w-full flex justify-center pt-10">
-          <span className="text-gray-500 font-semibold">no chats found</span>
+          <span className="text-gray-500 font-semibold">No chats found</span>
         </div>
       )}
     </>

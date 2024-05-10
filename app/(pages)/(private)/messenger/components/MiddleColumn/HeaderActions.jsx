@@ -13,15 +13,19 @@ import { useCallback } from 'react';
 function HeaderActions({ openedChat }) {
   const router = useRouter();
 
-  const deleteChat = useCallback(async (chatId) => {
-    await deleteDoc(doc(firestore, `chats/${chatId}`));
-    const messagesRef = collection(firestore, 'messages');
-    const q = query(messagesRef, where('chatId', '==', openedChat.chatId));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach(async (document) => {
-      await deleteDoc(document.ref);
-    });
-  }, []);
+  const deleteChat = useCallback(
+    async (chatId) => {
+      await deleteDoc(doc(firestore, `chats/${chatId}`));
+      const messagesRef = collection(firestore, 'messages');
+      const q = query(messagesRef, where('chatId', '==', openedChat.chatId));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(async (document) => {
+        console.log(document.data());
+        await deleteDoc(document.ref);
+      });
+    },
+    [openedChat],
+  );
 
   return (
     <div className="flex gap-4 items-center">

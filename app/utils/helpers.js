@@ -1,6 +1,8 @@
-export function findParticipantUser(thisUser, chat, users) {
+import { useGetUser } from './hooks';
+
+export async function findParticipantUser(thisUser, chat, users) {
   const userUid = chat.participants.find((uid) => uid != thisUser.uid);
-  const user = users.data[userUid];
+  const user = await useGetUser(userUid);
   return user;
 }
 

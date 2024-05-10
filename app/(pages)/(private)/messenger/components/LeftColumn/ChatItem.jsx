@@ -53,8 +53,13 @@ function ChatItem({ user }) {
     const chatId = getChatId(pathName);
     const openedChat = chats.find((chat) => chat.chatId == chatId);
     if (!openedChat) return;
-    const user = findParticipantUser(currentUser, openedChat, users);
-    setSelectedUser(user);
+    findParticipantUser(currentUser, openedChat, users)
+      .then((user) => {
+        setSelectedUser(user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [pathName, users.loading, chatsLoading, currentUserLoading]);
 
   const addChatOnCollection = useCallback(
@@ -100,7 +105,7 @@ function ChatItem({ user }) {
         }
       }}
     >
-      <div className="flex justify-between pr-3 max-w-full">
+      <div className="flex gap-3 justify-between pr-3 max-w-full">
         <div className="w-1/6">
           <Avatar url={user.photoURL} width={12} height={12} />
         </div>

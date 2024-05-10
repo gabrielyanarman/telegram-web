@@ -26,8 +26,13 @@ function ChatInfo() {
     const chatId = getChatId(pathName);
     const openedChat = chats.find((chat) => chat.chatId == chatId);
     if (!openedChat) return;
-    const user = findParticipantUser(currentUser, openedChat, users);
-    setUser(user);
+    findParticipantUser(currentUser, openedChat, users)
+      .then((user) => {
+        setUser(user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [pathName, chats, users.loading, loading]);
 
   if (error) {

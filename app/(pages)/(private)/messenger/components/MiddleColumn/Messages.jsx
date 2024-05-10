@@ -62,7 +62,7 @@ function Messages() {
         sender: docSnap.data().newMessages.sender,
       },
     });
-  }, []);
+  }, [messages]);
 
   useEffect(() => {
     if (messagesLoading) return;
@@ -71,8 +71,12 @@ function Messages() {
       top: messengerContainer.scrollHeight,
     });
     textAreaRef.current.style.height = 'auto';
+  }, [messages, pathName, messagesLoading]);
+
+  useEffect(() => {
+    if (messagesLoading || !messages.length) return;
     updateNewMessages();
-  }, [messages, pathName]);
+  }, [messages, messagesLoading]);
 
   if (error) {
     console.log(error);

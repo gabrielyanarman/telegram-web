@@ -21,7 +21,7 @@ function SearchGroup() {
           searchTab == 'chats'
             ? 'text-[#3390EC] border-blue-600 rounded-br-none rounded-bl-none'
             : 'text-gray-500 border-transparent'
-        } font-semibold text-sm p-2 border-b-2 rounded-md hover:bg-gray-200 transition-all duration-200`}
+        } font-semibold text-sm p-2 border-b-2 rounded-md hover:bg-gray-200 transition-all duration-200 focus:outline-0`}
       >
         Chats
       </button>
@@ -34,7 +34,7 @@ function SearchGroup() {
           searchTab == 'users'
             ? 'text-[#3390EC] border-blue-600 rounded-br-none rounded-bl-none'
             : 'text-gray-500 border-transparent'
-        } font-semibold text-sm p-2 rounded-md border-b-2 hover:bg-gray-200 transition-all duration-200`}
+        } font-semibold text-sm p-2 rounded-md border-b-2 hover:bg-gray-200 transition-all duration-200 focus:outline-0`}
       >
         Users
       </button>
