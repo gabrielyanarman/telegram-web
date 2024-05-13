@@ -11,7 +11,7 @@ function AuthHeader() {
   const router = useRouter();
   const [selected, setSelected] = useState('login');
   const pathName = usePathname();
-  const [user] = useAuthState(auth);
+  const [currentUser] = useAuthState(auth);
 
   useEffect(() => {
     const parts = pathName.split('/');
@@ -32,7 +32,7 @@ function AuthHeader() {
   }, [auth]);
 
   return (
-    <div className="w-full flex justify-between pb-4 border-b items-center">
+    <div className="w-full flex justify-between pb-4 border-b items-center px-6">
       <div className="self-start cursor-pointer flex gap-3 justify-center items-center">
         <img
           src="https://firebasestorage.googleapis.com/v0/b/my-telegram-app-1.appspot.com/o/users%2Flogo.jpg?alt=media&token=046ff22c-12a1-486a-9d85-69e35cfd5cd6"
@@ -41,7 +41,7 @@ function AuthHeader() {
         />
         <span className="text-lg text-[#039BE5] font-bold">Telegram</span>
       </div>
-      {user ? (
+      {currentUser ? (
         <div className="flex gap-5 justify-center items-center">
           <button
             className={`transition-all border-[#039BE5] bg-[#039BE5] hover:bg-blue-600 text-white duration-300 px-3 py-2 text-[15px] rounded-lg font-semibold border`}

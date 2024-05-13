@@ -1,29 +1,22 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { firestore } from '@/app/firebase';
-import { collection, getDocs, query } from 'firebase/firestore';
+import { useGetUsers } from '@/app/utils/hooks';
 
 export const initialState = {
   data: {},
   loading: null,
 };
 
-export const getUsersAsync = createAsyncThunk('get/users', async () => {
-  try {
-    const q = query(collection(firestore, 'users'));
-    const querySnapshot = await getDocs(q);
-    let usersArr = [];
-    let result = {};
-    querySnapshot.forEach((doc) => {
-      usersArr.push(doc.data());
-    });
-    usersArr.forEach((user) => {
-      result[user.uid] = user;
+export const getUsersAsync = createAsyncThunk(
+  'get/users',
+  async ({ limitUsers = 10, lastVisible }) => {
+    const usersArr = await useGetUsers('uid', lastVisible, limitUsers);
+    const result = {};
+    usersArr.forEach((item) => {
+      result[item.uid] = item;
     });
     return result;
-  } catch (error) {
-    console.log(error);
-  }
-});
+  },
+);
 
 export const usersSlice = createSlice({
   name: 'users',
@@ -36,8 +29,14 @@ export const usersSlice = createSlice({
         state.loading = true;
       })
       .addCase(getUsersAsync.fulfilled, (state, action) => {
-        state.data = action.payload;
+        state.data = {
+          ...state.data,
+          ...action.payload,
+        };
         state.loading = false;
+      })
+      .addCase(getUsersAsync.rejected, () => {
+        console.log('error');
       });
   },
 });

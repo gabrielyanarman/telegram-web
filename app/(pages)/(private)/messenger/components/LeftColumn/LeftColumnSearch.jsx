@@ -1,12 +1,14 @@
 'use client';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 import {
   changeSearchValue,
   searchStateSelector,
 } from '@/app/redux/slices/searchSlice';
 
-function LeftColumnSearch({ inputFocus, setInputFocus }) {
+function LeftColumnSearch() {
+  const [inputFocus, setInputFocus] = useState(false);
   const dispatch = useDispatch();
   const searchValue = useSelector(searchStateSelector).value;
 

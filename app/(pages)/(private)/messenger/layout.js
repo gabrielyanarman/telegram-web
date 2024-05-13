@@ -2,28 +2,28 @@
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/app/firebase';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import MiddleColumn from './components/MiddleColumn/MiddleColumn';
 import Loader from '@/app/components/Loader';
 import SearchGroup from './components/LeftColumn/SearchGroup';
 import LeftColumnHeader from './components/LeftColumn/LeftColumnHeader';
-import { getUsersAsync } from '@/app/redux/slices/usersSlice';
-import { getChatsForUserAsync } from '@/app/redux/slices/chatsSlice';
+import { getUsersAsync, usersSelector } from '@/app/redux/slices/usersSlice';
 import { searchStateSelector } from '@/app/redux/slices/searchSlice';
 import UsersList from './components/LeftColumn/UsersList';
 import ChatsList from './components/LeftColumn/ChatsList';
 
 export default function MessengerLayout({ children }) {
   const dispatch = useDispatch();
-  const [user, loading] = useAuthState(auth);
+  const [currentUser, loading] = useAuthState(auth);
   const searchTab = useSelector(searchStateSelector).searchTab;
+  const usersLastVisible = useSelector(usersSelector).lastVisible;
 
   useEffect(() => {
-    dispatch(getUsersAsync());
-    !loading && dispatch(getChatsForUserAsync(user.uid));
+    if (loading) return;
+    dispatch(getUsersAsync({ usersLastVisible }));
   }, [loading]);
 
-  if (user === null || loading) {
+  if (!currentUser || loading) {
     return (
       <div className="w-full min-h-96 flex justify-center items-center">
         <Loader />
@@ -35,10 +35,14 @@ export default function MessengerLayout({ children }) {
       <div className="my-shadow-r w-1/4 h-full flex flex-col relative">
         <LeftColumnHeader />
         <SearchGroup />
-        <div className="overflow-y-auto">
-          <div className="py-3 px-2 flex flex-col gap-1">
-            {searchTab == 'users' ? <UsersList /> : <ChatsList />}
-          </div>
+        <div className="chatList transition-all duration-300 overflow-y-scroll py-3 pl-2 pr-1 mr-[1px] flex flex-col gap-1 relative">
+          {searchTab == 'users' ? (
+            <div>
+              <UsersList />
+            </div>
+          ) : (
+            <ChatsList />
+          )}
         </div>
       </div>
       <MiddleColumn />

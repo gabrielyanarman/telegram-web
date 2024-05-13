@@ -10,11 +10,12 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 export default function LogIn() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [user] = useAuthState(auth);
+  const [currentUser, currentUserLoading] = useAuthState(auth);
 
   useEffect(() => {
-    if (user) router.push('/messenger/chats');
-  }, [user]);
+    if (currentUserLoading) return;
+    if (currentUser) router.push('/messenger/chats');
+  }, [currentUser]);
 
   const [loginData, setLoginData] = useState({
     email: null,

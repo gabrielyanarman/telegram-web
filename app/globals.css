@@ -14,3 +14,64 @@
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   }
 }
+
+.bg-messages {
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/my-telegram-app-1.appspot.com/o/background%2Fbg-img.jpg?alt=media&token=f703784e-7b12-451f-8da4-900e67a8ddc9");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+::-webkit-scrollbar {
+  width: 5px; 
+  height: 8px; 
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  transition: background-color 0.3s ease;
+  background-color: #fff; 
+  border-radius: 4px; 
+}
+
+.chatList:hover::-webkit-scrollbar-thumb {
+  background-color: #cecece;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #bebdbd;
+}
+
+
+
+.messages-container::-webkit-scrollbar {
+  width: 5px; 
+  height: 8px; 
+  max-height: 50px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  background-color: transparent;
+  max-height: 50px;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  transition: background-color 0.3s ease;
+  background-color: transparent; 
+  border-radius: 4px; 
+  max-height: 50px;
+}
+
+.messages-container:hover.messages-container::-webkit-scrollbar-thumb {
+  background-color: rgba(40, 150, 80, 0.6);
+  max-height: 50px;
+}
+
+.text_area::-webkit-scrollbar-thumb {
+  transition: background-color 0.3s ease;
+  background-color: #bebdbd; 
+  border-radius: 4px; 
+}
