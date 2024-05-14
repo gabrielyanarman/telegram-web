@@ -1,9 +1,3 @@
-import LogIn from './(public)/(auth)/login/page';
+import LogIn from './(Auth)/login/page';
 
-export default function Home() {
-  return (
-    <div>
-      <LogIn />
-    </div>
-  );
-}
+export default LogIn;

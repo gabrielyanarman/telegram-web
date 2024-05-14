@@ -3,7 +3,6 @@
 import { useSelector } from 'react-redux';
 import ChatItem from './ChatItem';
 import Loader from '@/app/components/Loader';
-import { usersSelector } from '@/app/redux/slices/usersSlice';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, firestore } from '@/app/firebase';
 import { searchStateSelector } from '@/app/redux/slices/searchSlice';

@@ -15,6 +15,15 @@
   }
 }
 
+.text-logo {
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
+}
+
 .bg-messages {
   background-image: url("https://firebasestorage.googleapis.com/v0/b/my-telegram-app-1.appspot.com/o/background%2Fbg-img.jpg?alt=media&token=f703784e-7b12-451f-8da4-900e67a8ddc9");
   background-repeat: no-repeat;

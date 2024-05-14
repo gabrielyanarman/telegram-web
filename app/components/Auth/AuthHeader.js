@@ -6,6 +6,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/app/firebase';
 import { signOut } from 'firebase/auth';
 import Link from 'next/link';
+import Cookies from 'js-cookie';
 
 function AuthHeader() {
   const router = useRouter();
@@ -26,6 +27,8 @@ function AuthHeader() {
   const handleSignOut = useCallback(async () => {
     try {
       const response = await signOut(auth);
+      Cookies.remove('isLoggedIn');
+      router.push('/');
     } catch (error) {
       console.log(error);
     }
@@ -33,20 +36,21 @@ function AuthHeader() {
 
   return (
     <div className="w-full flex justify-between pb-4 border-b items-center px-6">
-      <div className="self-start cursor-pointer flex gap-3 justify-center items-center">
+      <div className="self-start flex gap-3 justify-center items-center">
         <img
           src="https://firebasestorage.googleapis.com/v0/b/my-telegram-app-1.appspot.com/o/users%2Flogo.jpg?alt=media&token=046ff22c-12a1-486a-9d85-69e35cfd5cd6"
           className="w-12 h-12"
           alt="logo"
         />
-        <span className="text-lg text-[#039BE5] font-bold">Telegram</span>
+        <span className="text-lg text-[#039BE5] font-bold text-logo">
+          Telegram
+        </span>
       </div>
       {currentUser ? (
         <div className="flex gap-5 justify-center items-center">
           <button
             className={`transition-all border-[#039BE5] bg-[#039BE5] hover:bg-blue-600 text-white duration-300 px-3 py-2 text-[15px] rounded-lg font-semibold border`}
             onClick={async () => {
-              router.push('/');
               await handleSignOut();
             }}
           >

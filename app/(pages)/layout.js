@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google';
 import '../globals.css';
 import '../firebase';
+import '../../middleware';
 import AuthHeader from '../components/Auth/AuthHeader';
 import Providers from '../redux/provider';
 
