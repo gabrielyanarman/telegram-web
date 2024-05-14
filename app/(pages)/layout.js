@@ -4,7 +4,6 @@ import '../firebase';
 import '../../middleware';
 import AuthHeader from '../components/Auth/AuthHeader';
 import Providers from '../redux/provider';
-
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {

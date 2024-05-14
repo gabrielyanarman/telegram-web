@@ -44,7 +44,7 @@ export default function LogIn() {
           loginData.password,
         );
         setLoading(true);
-        Cookies.set('isLoggedIn', 'true')
+        Cookies.set('isLoggedIn', 'true');
         router.push('/messenger/chats');
       } catch (error) {
         setLoading(false);
