@@ -89,7 +89,7 @@ function Messages() {
           id="messenger-container"
           className={`messages-container w-full overflow-y-scroll relative flex justify-center mr-1 pl-1`}
         >
-          <div className="w-4/6 flex flex-col gap-2 items-start">
+          <div className="md:w-4/6 w-full px-2 md:px-0 flex flex-col gap-2 items-start">
             {messagesLoading ? (
               <div className="flex justify-center items-center min-h-[450px] w-full">
                 <Loader />
@@ -99,14 +99,14 @@ function Messages() {
                 <Message key={message.lastMessageTime} message={message} />
               ))
             ) : (
-              <span className="text-gray-600 text-lg font-semibold fixed top-1/2 left-1/2 translate-y-1/2 translate-x-1/2 z-20">
+              <span className="text-gray-600 text-lg font-semibold fixed -translate-x-1/2 top-1/2 left-1/2 sm:translate-y-1/2 sm:translate-x-1/2 z-20">
                 no messages ...
               </span>
             )}
           </div>
           <div className="scroll-bar"></div>
         </div>
-        <div className="py-2 w-4/6">
+        <div className="py-1 md:py-2 w-full md:w-4/6 px-2 md:px-0">
           <form
             className="flex items-end justify-between gap-4 w-full"
             onSubmit={(event) => {

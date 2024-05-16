@@ -9,7 +9,7 @@ import { auth } from '@/app/firebase';
 import { searchStateSelector } from '@/app/redux/slices/searchSlice';
 import { useUsersTotalCount } from '@/app/utils/hooks';
 
-function UsersList() {
+function UsersList({setOnChat}) {
   const users = useSelector(usersSelector);
   const [currentUser] = useAuthState(auth);
   const searchValue = useSelector(searchStateSelector).value;
@@ -74,7 +74,7 @@ function UsersList() {
             !user.displayName
               .toLowerCase()
               .includes(searchValue.toLowerCase()) ? null : (
-            <ChatItem key={user.uid} user={user} />
+            <ChatItem key={user.uid} user={user} setOnChat={setOnChat} />
           );
         })
       ) : (

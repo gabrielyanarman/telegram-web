@@ -56,7 +56,7 @@ export default function LogIn() {
   );
 
   return (
-    <main className="min-h-96 mx-auto max-w-[50%] flex flex-col justify-center items-center pt-24 gap-10">
+    <main className="min-h-96 mx-auto max-w-[50%] flex flex-col justify-center items-center pt-16 sm:pt-24 gap-10">
       {loading ? (
         <Loader />
       ) : (

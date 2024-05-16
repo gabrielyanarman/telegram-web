@@ -16,6 +16,7 @@ export default function MessengerLayout({ children }) {
   const dispatch = useDispatch();
   const [currentUser, loading] = useAuthState(auth);
   const searchTab = useSelector(searchStateSelector).searchTab;
+  const [onChat, setOnChat] = useState(false)
   const usersLastVisible = useSelector(usersSelector).lastVisible;
 
   useEffect(() => {
@@ -32,20 +33,26 @@ export default function MessengerLayout({ children }) {
   }
   return (
     <div className="w-full h-[calc(100vh-81px)] flex relative">
-      <div className="my-shadow-r w-1/4 h-full flex flex-col relative">
+      <div
+        className={`${onChat ? 'hidden sm:block' : 'block'} my-shadow-r w-full sm:w-[45%] md:w-1/3 lg:w-1/4 h-full flex flex-col relative`}
+      >
         <LeftColumnHeader />
         <SearchGroup />
         <div className="chatList transition-all duration-300 overflow-y-scroll py-3 pl-2 pr-1 mr-[1px] flex flex-col gap-1 relative">
           {searchTab == 'users' ? (
             <div>
-              <UsersList />
+              <UsersList setOnChat={setOnChat} />
             </div>
           ) : (
-            <ChatsList />
+            <ChatsList setOnChat={setOnChat} />
           )}
         </div>
       </div>
-      <MiddleColumn />
+      <div
+        className={`${!onChat ? 'hidden sm:block' : 'block'} w-full sm:w-[55%] md:w-2/3 lg:w-3/4 h-full bg-messages`}
+      >
+        <MiddleColumn setOnChat={setOnChat} />
+      </div>
     </div>
   );
 }

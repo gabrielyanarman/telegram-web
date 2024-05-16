@@ -8,7 +8,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { getChatId } from '@/app/utils/helpers';
 
-function MiddleColumn() {
+function MiddleColumn({ setOnChat }) {
   const [openedChat, setOpenedChat] = useState(null);
   const pathName = usePathname();
   const [currentUser, currentUserLoading] = useAuthState(auth);
@@ -27,14 +27,14 @@ function MiddleColumn() {
   }, [pathName, chats]);
 
   return (
-    <div className="w-3/4 h-full bg-messages">
+    <>
       {openedChat && (
         <>
-          <MiddleColumnHeader openedChat={openedChat} />
+          <MiddleColumnHeader openedChat={openedChat} setOnChat={setOnChat} />
           <Messages />
         </>
       )}
-    </div>
+    </>
   );
 }
 

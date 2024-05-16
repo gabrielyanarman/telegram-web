@@ -35,14 +35,14 @@ function AuthHeader() {
   }, [auth]);
 
   return (
-    <div className="w-full flex justify-between pb-4 border-b items-center px-6">
+    <div className="w-full flex justify-between pb-2 sm:pb-4 border-b items-center px-2 sm:px-6">
       <div className="self-start flex gap-3 justify-center items-center">
         <img
           src="https://firebasestorage.googleapis.com/v0/b/my-telegram-app-1.appspot.com/o/users%2Flogo.jpg?alt=media&token=046ff22c-12a1-486a-9d85-69e35cfd5cd6"
           className="w-12 h-12"
           alt="logo"
         />
-        <span className="text-lg text-[#039BE5] font-bold text-logo">
+        <span className="hidden sm:inline-block text-lg text-[#039BE5] font-bold text-logo">
           Telegram
         </span>
       </div>
@@ -74,12 +74,12 @@ function AuthHeader() {
           </button>
         </div>
       ) : (
-        <div className="flex gap-5 justify-center items-center">
+        <div className="flex sm:gap-5 justify-center items-center">
           <Link href="/register">
             <button
               className={`transition-all duration-300 px-3 py-2 text-[15px] rounded-lg font-semibold border border-slate-500 ${
                 selected == 'register'
-                  ? 'border-[#039BE5] text-white bg-[#039BE5]'
+                  ? 'border-[#039BE5] text-white bg-[#039BE5] hidden sm:block'
                   : 'text-slate-500'
               }`}
             >
@@ -100,7 +100,7 @@ function AuthHeader() {
             <button
               className={`transition-all duration-300 px-3 py-2 text-[15px] rounded-lg font-semibold border border-slate-500 ${
                 selected == 'login'
-                  ? 'border-[#039BE5] text-white bg-[#039BE5]'
+                  ? 'border-[#039BE5] text-white bg-[#039BE5] hidden sm:block'
                   : 'text-slate-500'
               }`}
             >

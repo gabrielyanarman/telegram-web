@@ -14,7 +14,7 @@ import {
 } from '@/app/redux/slices/searchSlice';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-function ChatItem({ user }) {
+function ChatItem({ user, setOnChat }) {
   const [chatWithUser, setChatWithUser] = useState(null);
   const [selectedUser, setSelectedUser] = useState({});
   const [lastMessage, setLastMessage] = useState({});
@@ -83,13 +83,14 @@ function ChatItem({ user }) {
     <div
       className={`${
         selectedUser.uid == user.uid && searchTab == 'chats'
-          ? 'bg-[#3390EC] hover:bg-[#3390EC]'
+          ? 'sm:bg-[#3390EC] sm:hover:bg-[#3390EC]'
           : 'hover:bg-gray-100'
       } px-2 py-3 rounded-2xl transition-all duration-300 cursor-pointer w-[100%] relative`}
       onClick={(e) => {
         e.preventDefault();
         if (chatWithUser) {
           router.push(`/messenger/chats/:${chatWithUser.chatId}`);
+          setOnChat(true)
           dispatch(changeSearchTab('chats'));
           dispatch(changeSearchValue(''));
         } else {
@@ -100,6 +101,7 @@ function ChatItem({ user }) {
             .join('');
           router.push(`/messenger/chats/:${chatId}`);
           setSelectedUser(user);
+          setOnChat(true);
           dispatch(changeSearchTab('chats'));
           dispatch(changeSearchValue(''));
         }
@@ -115,14 +117,14 @@ function ChatItem({ user }) {
               className={`${
                 selectedUser.uid == user.uid &&
                 searchTab == 'chats' &&
-                'text-white'
+                'sm:text-white'
               } font-bold transition-all duration-300`}
             >
               {user.displayName}
             </span>
             {searchTab == 'chats' && (
               <span
-                className={`${selectedUser.uid == user.uid ? 'text-slate-100' : 'text-gray-500'} text-xs font-semibold`}
+                className={`${selectedUser.uid == user.uid ? 'sm:text-slate-100' : 'text-gray-500'} text-xs font-semibold`}
               >
                 {lastMessage.time || ''}
               </span>
@@ -131,7 +133,7 @@ function ChatItem({ user }) {
           {searchTab == 'chats' && (
             <div className="w-full flex justify-between gap-2">
               <p
-                className={`${selectedUser.uid == user.uid ? 'text-slate-100' : 'text-gray-500'} text-sm max-w-full font-semibold inline-block whitespace-nowrap truncate`}
+                className={`${selectedUser.uid == user.uid ? 'sm:text-slate-100' : 'text-gray-500'} text-sm max-w-full font-semibold inline-block whitespace-nowrap truncate`}
               >
                 {lastMessage.text || ''}
               </p>

@@ -130,11 +130,11 @@ export default function Register() {
                 }
                 toRegister();
               }}
-              className="w-full px-10 flex flex-col gap-5 justify-center items-center"
+              className="w-full px-2 ms:px-10 flex flex-col gap-5 justify-center items-center"
             >
-              <div className="w-full flex flex-col gap-5 justify-center items-center">
-                <div className="w-full flex gap-12 items-start">
-                  <label className="flex flex-col gap-2 justify-center items-start w-1/2">
+              <div className="w-full flex flex-col sm:gap-5 gap-2 justify-center items-center">
+                <div className="w-full flex flex-col sm:flex-row sm:gap-12 gap-2 items-start">
+                  <label className="flex flex-col gap-2 justify-center items-start w-full sm:w-1/2">
                     <p className="text-slate-500">Your name</p>
                     <input
                       type="text"
@@ -157,7 +157,7 @@ export default function Register() {
                       <p className="h-5"></p>
                     )}
                   </label>
-                  <label className="flex flex-col gap-2 justify-center items-start w-1/2">
+                  <label className="flex flex-col gap-2 justify-center items-start w-full sm:w-1/2">
                     <p className="text-slate-500">Your surname</p>
                     <input
                       type="text"
@@ -181,8 +181,8 @@ export default function Register() {
                     )}
                   </label>
                 </div>
-                <div className="w-full flex gap-12 items-start">
-                  <label className="flex flex-col gap-2 justify-center items-start w-1/2">
+                <div className="w-full flex flex-col sm:flex-row sm:gap-12 gap-2 items-start">
+                  <label className="flex flex-col gap-2 justify-center items-start w-full sm:w-1/2">
                     <p className="text-slate-500">Email Address</p>
                     <input
                       type="email"
@@ -201,7 +201,7 @@ export default function Register() {
                       <p className="h-5"></p>
                     )}
                   </label>
-                  <label className="flex flex-col gap-2 justify-center items-start w-1/2">
+                  <label className="flex flex-col gap-2 justify-center items-start w-full sm:w-1/2">
                     <p className="text-slate-500">Password</p>
                     <input
                       type="password"
@@ -227,8 +227,8 @@ export default function Register() {
                 </div>
               </div>
               <div className="w-full flex flex-col justify-center items-center">
-                <div className="w-full flex gap-12 items-center">
-                  <label className="flex flex-col gap-2 justify-center items-start w-1/2">
+                <div className="w-full flex sm:flex-row flex-col sm:gap-12 gap:2 items-center">
+                  <label className="flex flex-col gap-2 justify-center items-start w-full sm:w-1/2">
                     <p className="text-slate-500">Copy password</p>
                     <input
                       type="password"
@@ -253,7 +253,7 @@ export default function Register() {
                   </label>
                   <label
                     htmlFor="file-upload"
-                    className={`w-1/2 cursor-pointer text-white font-semibold py-2 px-4 rounded-lg inline-flex items-center transition-all duration-300 ${
+                    className={`w-full sm:w-1/2 cursor-pointer text-white font-semibold py-2 px-4 rounded-lg inline-flex items-center transition-all duration-300 ${
                       newUser.image.value
                         ? 'bg-green-500 hover:bg-green-700'
                         : 'bg-indigo-500 hover:bg-indigo-700'
@@ -278,7 +278,7 @@ export default function Register() {
                   ></input>
                 </div>
               </div>
-              <button className="w-1/2 py-2 mt-4 rounded-lg font-bold border border-[#039BE5] bg-[#039BE5] text-white transition-colors duration-300 hover:bg-blue-600">
+              <button className="w-full sm:w-1/2 py-2 mt-4 rounded-lg font-bold border border-[#039BE5] bg-[#039BE5] text-white transition-colors duration-300 hover:bg-blue-600">
                 Register
               </button>
             </form>

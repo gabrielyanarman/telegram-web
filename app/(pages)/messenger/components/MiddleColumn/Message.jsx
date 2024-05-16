@@ -7,7 +7,7 @@ function Message({ message }) {
   if (loading) return;
   return (
     <div
-      className={`${currentUser.uid == message.uid ? 'bg-white' : 'bg-[#E3FEE0] self-end'} inline-block rounded-2xl min-w-28 max-w-[70%]`}
+      className={`${currentUser.uid == message.uid ? 'bg-[#E3FEE0] self-end' : 'bg-white'} inline-block rounded-2xl min-w-28 max-w-[70%]`}
     >
       <div className="message text-slate-900 pt-[6px] pb-[2px] px-2">
         {message.text}

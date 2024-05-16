@@ -40,7 +40,7 @@ function ChatInfo() {
     return;
   }
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 items-center sm:items-start">
       {user ? (
         <>
           <Avatar url={user.photoURL} width={12} height={12} />

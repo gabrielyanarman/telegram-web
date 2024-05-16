@@ -10,7 +10,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 
-function HeaderActions({ openedChat }) {
+function HeaderActions({ openedChat, setOnChat }) {
   const router = useRouter();
 
   const deleteChat = useCallback(
@@ -35,6 +35,7 @@ function HeaderActions({ openedChat }) {
           const sure = confirm('Do you want delete this chat ?');
           if (!sure) return;
           deleteChat(openedChat.chatId);
+          setOnChat(false)
           router.push('/messenger/chats');
         }}
       >
