@@ -1,7 +1,7 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { collection, doc, query, setDoc, where } from 'firebase/firestore';
 import { auth, firestore } from '@/app/firebase';
 import Avatar from '@/app/components/Avatar';
@@ -13,9 +13,11 @@ import {
   searchStateSelector,
 } from '@/app/redux/slices/searchSlice';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { OnChatContext } from '@/app/(pages)/layout';
 
-function ChatItem({ user, setOnChat }) {
+function ChatItem({ user }) {
   const [chatWithUser, setChatWithUser] = useState(null);
+  const {setOnChat} = useContext(OnChatContext)
   const [selectedUser, setSelectedUser] = useState({});
   const [lastMessage, setLastMessage] = useState({});
   const router = useRouter();

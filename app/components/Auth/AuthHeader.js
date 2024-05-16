@@ -1,15 +1,17 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/app/firebase';
 import { signOut } from 'firebase/auth';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
+import { OnChatContext } from '@/app/(pages)/layout';
 
 function AuthHeader() {
   const router = useRouter();
+  const {onChat} = useContext(OnChatContext)
   const [selected, setSelected] = useState('login');
   const pathName = usePathname();
   const [currentUser] = useAuthState(auth);
@@ -35,14 +37,16 @@ function AuthHeader() {
   }, [auth]);
 
   return (
-    <div className="w-full flex justify-between pb-2 sm:pb-4 border-b items-center px-2 sm:px-6">
+    <div
+      className={`${onChat ? 'hidden sm:flex' : 'flex'} w-full justify-between items-center pb-2 sm:pb-4 border-b px-2 sm:px-6`}
+    >
       <div className="self-start flex gap-3 justify-center items-center">
         <img
           src="https://firebasestorage.googleapis.com/v0/b/my-telegram-app-1.appspot.com/o/users%2Flogo.jpg?alt=media&token=046ff22c-12a1-486a-9d85-69e35cfd5cd6"
           className="w-12 h-12"
           alt="logo"
         />
-        <span className="hidden sm:inline-block text-lg text-[#039BE5] font-bold text-logo">
+        <span className="text-lg text-[#039BE5] font-bold text-logo">
           Telegram
         </span>
       </div>

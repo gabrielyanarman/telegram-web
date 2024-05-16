@@ -11,7 +11,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useEffect, useState } from 'react';
 import { useGetUser } from '@/app/utils/hooks';
 
-function ChatsList({ setOnChat }) {
+function ChatsList() {
   const [chatItems, setChatItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentUser] = useAuthState(auth);
@@ -41,7 +41,7 @@ function ChatsList({ setOnChat }) {
                 .includes(searchValue.toLowerCase()),
             )
             .map(({ chat, user }) => (
-              <ChatItem key={chat.chatId} user={user} setOnChat={setOnChat} />
+              <ChatItem key={chat.chatId} user={user} />
             ));
           setChatItems(filteredChatItems);
         })

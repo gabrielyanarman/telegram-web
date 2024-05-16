@@ -84,7 +84,7 @@ function Messages() {
   }
   return (
     <div className="w-full pt-3">
-      <div className="relative w-full mx-auto flex flex-col items-center gap-2 justify-end h-[calc(100vh-172px)]">
+      <div className="relative w-full mx-auto flex flex-col items-center gap-2 justify-end h-[calc(100vh-80px)] sm:h-[calc(100vh-172px)]">
         <div
           id="messenger-container"
           className={`messages-container w-full overflow-y-scroll relative flex justify-center mr-1 pl-1`}

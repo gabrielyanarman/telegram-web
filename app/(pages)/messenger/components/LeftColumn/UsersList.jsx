@@ -1,6 +1,6 @@
 'use client';
 import { getUsersAsync, usersSelector } from '@/app/redux/slices/usersSlice';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ChatItem from './ChatItem';
 import Loader from '@/app/components/Loader';
@@ -8,9 +8,11 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/app/firebase';
 import { searchStateSelector } from '@/app/redux/slices/searchSlice';
 import { useUsersTotalCount } from '@/app/utils/hooks';
+import { OnChatContext } from '@/app/(pages)/layout';
 
-function UsersList({setOnChat}) {
+function UsersList() {
   const users = useSelector(usersSelector);
+  const {setOnChat} = useContext(OnChatContext)
   const [currentUser] = useAuthState(auth);
   const searchValue = useSelector(searchStateSelector).value;
   const [totalCount, setTotalCount] = useState(null);
