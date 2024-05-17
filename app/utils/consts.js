@@ -1,11 +1,14 @@
-export const EMAIL_REGEXP = /^.+@.+\..+$/;
-export const PASSWORD_REGEXP = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+export const EMAIL_REGEXP = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 export const ERROR_MESSAGES = {
-  firstName: '*Fill the field',
-  lastName: '*Fill the field',
-  email: '*Invalid email',
-  password:
-    '*"Password must be at least 8 characters long. Password must contain at least one lowercase letter,one uppercase letter and one digit.',
-  copyPassword: '*The passwords is different',
+  FIELD_MAX_ERROR_MESSAGE: (field, max) => {
+    return `${field} should have maximum ${max} characters.`;
+  },
+  FIELD_MIN_ERROR_MESSAGE: (field, min) => {
+    return `${field} should have at least ${min} characters.`;
+  },
+  FIELD_IS_REQUIRED: (field) => {
+    return `${field} is required.`;
+  },
+  PASSWORD_MATCH_ERROR: 'Passwords do not match',
 };

@@ -41,9 +41,7 @@ export default function MessengerLayout({ children }) {
         <SearchGroup />
         <div className="chatList transition-all duration-300 overflow-y-scroll py-3 pl-2 pr-1 mr-[1px] flex flex-col gap-1 relative">
           {searchTab == 'users' ? (
-            <div>
               <UsersList />
-            </div>
           ) : (
             <ChatsList />
           )}
