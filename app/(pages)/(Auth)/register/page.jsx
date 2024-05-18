@@ -2,7 +2,6 @@
 
 import { useCallback, useState } from 'react';
 import { RegistrationSchema } from './schemas';
-import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
@@ -94,10 +93,10 @@ export default function Register() {
         <Loader />
       ) : (
         <>
-          <h3 className="text-2xl font-semibold text-gray-500 mb-4">
+          <h3 className="text-2xl font-semibold text-gray-500 dark:text-white mb-4">
             Please register
           </h3>
-          <div className="border-y border-slate-300 w-full py-10 flex justify-center items-center">
+          <div className="border-y border-slate-300 dark:border-white w-full py-10 flex justify-center items-center">
             <form
               onSubmit={handleSubmit(toRegister)}
               className="w-full px-2 ms:px-10 flex flex-col gap-2 sm:gap-4 justify-center items-center"
@@ -105,33 +104,33 @@ export default function Register() {
               <div className="w-full flex flex-col sm:gap-5 gap-2 justify-center items-center">
                 <div className="w-full flex flex-col sm:flex-row sm:gap-12 gap-2 items-start">
                   <label
-                    htmlFor="firstName"
                     className="relative flex flex-col gap-2 justify-center items-start w-full sm:w-1/2"
                   >
-                    <p className="text-slate-500">Your name</p>
+                    <p className="text-slate-500 dark:text-white">Your name</p>
                     <input
                       type="text"
-                      className="w-full border border-slate-300 px-4 py-1 focus:outline-none focus:outline-indigo-400 focus:border-transparent rounded-md"
+                      className="w-full border border-slate-300 px-4 py-1 focus:outline-none focus:outline-indigo-400 dark:focus:outline-indigo-600 focus:border-transparent rounded-md"
                       {...register('firstName')}
                     />
                     {errors.firstName && (
-                      <small className="text-red-600 text-sm max-w-full">
+                      <small className="text-red-600 dark:text-red-500 text-sm max-w-full">
                         {errors.firstName.message}
                       </small>
                     )}
                   </label>
                   <label
-                    htmlFor="lastName"
                     className="flex flex-col gap-2 justify-center items-start w-full sm:w-1/2"
                   >
-                    <p className="text-slate-500">Your surname</p>
+                    <p className="text-slate-500 dark:text-white">
+                      Your surname
+                    </p>
                     <input
                       type="text"
-                      className="w-full border border-slate-300 px-4 py-1 focus:outline-none focus:outline-indigo-400 focus:border-transparent rounded-md"
+                      className="w-full border border-slate-300 px-4 py-1 focus:outline-none focus:outline-indigo-400 dark:focus:outline-indigo-600 focus:border-transparent rounded-md"
                       {...register('lastName')}
                     />
                     {errors.lastName && (
-                      <small className="text-red-600 text-sm">
+                      <small className="text-red-600 dark:text-red-500 text-sm">
                         {errors.lastName.message}
                       </small>
                     )}
@@ -139,33 +138,33 @@ export default function Register() {
                 </div>
                 <div className="w-full flex flex-col sm:flex-row sm:gap-12 gap-2 items-start">
                   <label
-                    htmlFor="email"
                     className="flex flex-col gap-2 justify-center items-start w-full sm:w-1/2"
                   >
-                    <p className="text-slate-500">Email Address</p>
+                    <p className="text-slate-500 dark:text-white">
+                      Email Address
+                    </p>
                     <input
                       type="email"
-                      className="w-full border border-slate-300 px-4 py-1 focus:outline-none focus:outline-indigo-400 focus:border-transparent rounded-md"
+                      className="w-full border border-slate-300 px-4 py-1 focus:outline-none focus:outline-indigo-400 dark:focus:outline-indigo-600 focus:border-transparent rounded-md"
                       {...register('email')}
                     />
                     {errors.email && (
-                      <small className="text-red-600 text-sm">
+                      <small className="text-red-600 dark:text-red-500 text-sm">
                         {errors.email.message}
                       </small>
                     )}
                   </label>
                   <label
-                    htmlFor="password"
                     className="flex flex-col gap-2 justify-center items-start w-full sm:w-1/2"
                   >
-                    <p className="text-slate-500">Password</p>
+                    <p className="text-slate-500 dark:text-white">Password</p>
                     <input
                       type="password"
-                      className="w-full border border-slate-300 px-4 py-1 focus:outline-none focus:outline-indigo-400 focus:border-transparent rounded-md"
+                      className="w-full border border-slate-300 px-4 py-1 focus:outline-none focus:outline-indigo-400 dark:focus:outline-indigo-600 focus:border-transparent rounded-md"
                       {...register('password')}
                     />
                     {errors.password && (
-                      <small className="text-red-600 text-sm">
+                      <small className="text-red-600 dark:text-red-500 text-sm">
                         {errors.password.message}
                       </small>
                     )}
@@ -175,24 +174,25 @@ export default function Register() {
               <div className="w-full flex flex-col justify-center items-center">
                 <div className="w-full flex sm:flex-row flex-col sm:gap-12 gap-2 items-center">
                   <label
-                    htmlFor="copyPassword"
                     className="flex flex-col gap-2 justify-center items-start w-full sm:w-1/2"
                   >
-                    <p className="text-slate-500">Copy password</p>
+                    <p className="text-slate-500 dark:text-white">
+                      Copy password
+                    </p>
                     <input
                       type="password"
-                      className="w-full border border-slate-300 px-4 py-1 focus:outline-none focus:outline-indigo-400 focus:border-transparent rounded-md"
+                      className="w-full border border-slate-300 px-4 py-1 focus:outline-none focus:outline-indigo-400 dark:focus:outline-indigo-600 focus:border-transparent rounded-md"
                       {...register('copyPassword')}
                     />
                     {errors.copyPassword && (
-                      <small className="text-red-600 text-sm">
+                      <small className="text-red-600 dark:text-red-500 text-sm">
                         {errors.copyPassword.message}
                       </small>
                     )}
                   </label>
                   <label
                     htmlFor="file-upload"
-                    className={`${errors.copyPassword ? 'self-center' : 'self-end'} ${uploadImage ? 'bg-[#27B170] hover:bg-[rgb(39,177,69)]' : ' bg-indigo-500 hover:bg-indigo-700'} w-full sm:w-1/2 cursor-pointer text-white font-semibold py-2 px-4 rounded-lg inline-flex items-center transition-all duration-300 `}
+                    className={`${errors.copyPassword ? 'self-center' : 'self-end'} ${uploadImage ? 'bg-[#27B170] hover:bg-[rgb(39,177,69)]' : ' bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600'} w-full sm:w-1/2 cursor-pointer text-white font-semibold py-2 px-4 rounded-lg inline-flex items-center transition-all duration-300 `}
                   >
                     {uploadImage ? 'File added' : 'Add a photo'}
                   </label>
@@ -209,7 +209,7 @@ export default function Register() {
                   ></input>
                 </div>
               </div>
-              <button className="w-full sm:w-1/2 py-2 mt-4 rounded-lg font-bold border border-[#039BE5] bg-[#039BE5] text-white transition-colors duration-300 hover:bg-blue-600">
+              <button className="w-full sm:w-1/2 py-2 mt-4 rounded-lg font-bold border border-[#039BE5] bg-[#039BE5] dark:border-indigo-600 dark:bg-indigo-600 dark:hover:bg-indigo-800 dark:hover:border-indigo-800 text-white transition-colors duration-300 hover:bg-blue-600">
                 Register
               </button>
             </form>

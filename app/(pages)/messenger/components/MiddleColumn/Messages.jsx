@@ -82,6 +82,7 @@ function Messages() {
     console.log(error);
     return;
   }
+  
   return (
     <div className="w-full pt-3">
       <div className="relative w-full mx-auto flex flex-col items-center gap-2 justify-end h-[calc(100vh-80px)] sm:h-[calc(100vh-172px)]">
@@ -119,7 +120,7 @@ function Messages() {
               ref={textAreaRef}
               type="text"
               placeholder="Message"
-              className={`min-h-12 w-[90%] overflow-y-auto rounded-xl focus:outline-none py-4 px-3 resize-none text_area`}
+              className={`min-h-12 w-[90%] overflow-y-auto rounded-xl focus:outline-none py-4 px-3 resize-none dark:bg-[#212121] text_area`}
               value={valueArea}
               onChange={(event) => {
                 setValueArea(event.target.value);
@@ -138,7 +139,7 @@ function Messages() {
                 }
               }}
             />
-            <button className="rounded-full w-14 h-14 flex justify-center items-center bg-[#27B170] hover:bg-[rgb(39,177,69)]">
+            <button className="rounded-full w-14 h-14 flex justify-center items-center dark:bg-indigo-700 dark:hover:bg-indigo-800 bg-[#27B170] hover:bg-[rgb(39,177,69)]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"

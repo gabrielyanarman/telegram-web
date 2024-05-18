@@ -44,7 +44,7 @@ function ChatInfo() {
       {user ? (
         <>
           <Avatar url={user.photoURL} width={12} height={12} />
-          <span className="font-bold">{user.displayName}</span>
+          <span className="font-bold dark:text-white">{user.displayName}</span>
         </>
       ) : null}
     </div>

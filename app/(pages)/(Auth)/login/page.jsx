@@ -58,39 +58,44 @@ export default function LogIn() {
         <Loader />
       ) : (
         <>
-          <h3 className="text-2xl font-semibold text-gray-500">
+          <h3 className="text-2xl font-semibold text-gray-500 dark:text-white">
             Please login{' '}
           </h3>
-          <div className="border-y border-slate-300 w-full py-10 flex justify-center items-center">
-            <form className="w-96 px-10 flex flex-col gap-4" onSubmit={handleSubmit(toLogin)}>
+          <div className="border-y border-slate-300 dark:border-white w-full py-10 flex justify-center items-center">
+            <form
+              className="w-96 px-10 flex flex-col gap-4"
+              onSubmit={handleSubmit(toLogin)}
+            >
               <label className="flex flex-col gap-2 justify-center items-start">
-                <p className="text-slate-500">Email Address</p>
+                <p className="text-slate-500 dark:text-white">Email Address</p>
                 <input
                   type="email"
-                  className="w-full border border-slate-300 px-4 py-1 focus:outline-none focus:outline-indigo-400 focus:border-transparent rounded-md"
+                  className="w-full border border-slate-300 px-4 py-1 focus:outline-none focus:outline-indigo-400 dark:focus:outline-indigo-600 focus:border-transparent rounded-md"
                   {...register('email')}
                 />
                 {errors.email && (
-                  <small className="text-red-600 text-sm max-w-full">
+                  <small className="text-red-600 dark:text-red-500 text-sm max-w-full">
                     {errors.email.message}
                   </small>
                 )}
               </label>
-              <label className="flex flex-col gap-2 justify-center items-strat">
-                <p className="text-slate-500">Password</p>
+              <label className="flex flex-col gap-2 justify-center">
+                <p className="text-slate-500 dark:text-white">Password</p>
                 <input
                   type="password"
-                  className="border border-slate-300 px-4 py-1 focus:outline-none focus:outline-indigo-400 focus:border-transparent rounded-md"
+                  className="border border-slate-300 px-4 py-1 focus:outline-none focus:outline-indigo-400 dark:focus:outline-indigo-600 focus:border-transparent rounded-md"
                   {...register('password')}
                 />
                 {errors.password && (
-                  <small className="text-red-600 text-sm max-w-full">
+                  <small className="text-red-600 dark:text-red-500 text-sm max-w-full">
                     {errors.password.message}
                   </small>
                 )}
               </label>
-              <p className="text-red-600">{error && 'user not found'}</p>
-              <button className="w-full py-2 mt-3 rounded-lg font-bold border border-[#039BE5] bg-[#039BE5] text-white transition-colors duration-300 hover:bg-blue-600">
+              <p className="text-red-600  dark:text-red-500">
+                {error && 'user not found'}
+              </p>
+              <button className="w-full py-2 mt-3 rounded-lg font-bold border dark:border-indigo-600 dark:bg-indigo-600 dark:hover:bg-indigo-800 dark:hover:border-indigo-800  border-[#039BE5] bg-[#039BE5] text-white transition-colors duration-300 hover:bg-blue-600">
                 Login
               </button>
             </form>

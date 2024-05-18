@@ -81,7 +81,7 @@ function UsersList() {
         })
       ) : (
         <div className="w-full flex justify-center pt-10">
-          <span className="text-gray-500 font-semibold">no users found</span>
+          <span className="text-gray-500 dark:text-white font-semibold">no users found</span>
         </div>
       )}
       <div ref={addLimitDivRef} className="h-4 bg-transparent w-full"></div>

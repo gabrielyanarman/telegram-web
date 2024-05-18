@@ -30,12 +30,12 @@ function HeaderActions({ openedChat, setOnChat }) {
   return (
     <div className="flex gap-4 items-center">
       <button
-        className="rounded-full p-2 hover:bg-gray-200"
+        className="rounded-full p-2 hover:bg-gray-200 dark:hover:bg-[#414040]"
         onClick={() => {
           const sure = confirm('Do you want delete this chat ?');
           if (!sure) return;
           deleteChat(openedChat.chatId);
-          setOnChat(false)
+          setOnChat(false);
           router.push('/messenger/chats');
         }}
       >
@@ -45,7 +45,7 @@ function HeaderActions({ openedChat, setOnChat }) {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="w-7 h-7 text-gray-500"
+          className="w-7 h-7 text-gray-500 dark:text-white"
         >
           <path
             strokeLinecap="round"

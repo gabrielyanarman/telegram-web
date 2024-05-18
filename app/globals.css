@@ -13,7 +13,20 @@
     --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   }
+
+  .dark-my-shadow-b {
+      --tw-shadow: 0 2px 0 0 #414040;
+      --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+      box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  }
+
+  .dark-my-shadow-r {
+      --tw-shadow: 2px 0 0 0 #414040;
+      --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+      box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    }
 }
+
 
 .text-logo {
   -webkit-touch-callout: none;
@@ -22,13 +35,6 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none; 
-}
-
-.bg-messages {
-  background-image: url("https://firebasestorage.googleapis.com/v0/b/my-telegram-app-1.appspot.com/o/background%2Fbg-img.jpg?alt=media&token=f703784e-7b12-451f-8da4-900e67a8ddc9");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
 }
 
 ::-webkit-scrollbar {

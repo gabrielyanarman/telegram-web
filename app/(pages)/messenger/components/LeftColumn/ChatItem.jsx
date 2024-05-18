@@ -85,14 +85,14 @@ function ChatItem({ user }) {
     <div
       className={`${
         selectedUser.uid == user.uid && searchTab == 'chats'
-          ? 'sm:bg-[#3390EC] sm:hover:bg-[#3390EC]'
-          : 'hover:bg-gray-100'
+          ? 'sm:bg-[#3390EC] sm:hover:bg-[#3390EC] dark:sm:bg-indigo-600 dark:sm:hover:bg-indigo-800'
+          : 'hover:bg-gray-100 dark:hover:bg-[#414040]'
       } px-2 py-3 rounded-2xl transition-all duration-300 cursor-pointer w-[100%] relative`}
       onClick={(e) => {
         e.preventDefault();
         if (chatWithUser) {
           router.push(`/messenger/chats/:${chatWithUser.chatId}`);
-          setOnChat(true)
+          setOnChat(true);
           dispatch(changeSearchTab('chats'));
           dispatch(changeSearchValue(''));
         } else {
@@ -120,13 +120,13 @@ function ChatItem({ user }) {
                 selectedUser.uid == user.uid &&
                 searchTab == 'chats' &&
                 'sm:text-white'
-              } font-bold transition-all duration-300`}
+              } font-bold transition-all duration-300 dark:text-white`}
             >
               {user.displayName}
             </span>
             {searchTab == 'chats' && (
               <span
-                className={`${selectedUser.uid == user.uid ? 'sm:text-slate-100' : 'text-gray-500'} text-xs font-semibold`}
+                className={`${selectedUser.uid == user.uid ? 'sm:text-slate-100 dark:text-gray-200' : 'text-gray-500 dark:text-gray-200'} text-xs font-semibold`}
               >
                 {lastMessage.time || ''}
               </span>
@@ -135,7 +135,7 @@ function ChatItem({ user }) {
           {searchTab == 'chats' && (
             <div className="w-full flex justify-between gap-2">
               <p
-                className={`${selectedUser.uid == user.uid ? 'sm:text-slate-100' : 'text-gray-500'} text-sm max-w-full font-semibold inline-block whitespace-nowrap truncate`}
+                className={`${selectedUser.uid == user.uid ? 'sm:text-slate-100 dark:text-gray-200' : 'text-gray-500 dark:text-gray-200'} text-sm max-w-full font-semibold inline-block whitespace-nowrap truncate`}
               >
                 {lastMessage.text || ''}
               </p>
@@ -143,7 +143,7 @@ function ChatItem({ user }) {
                 chatWithUser.newMessages.sender != currentUser.uid &&
                 user.uid != selectedUser.uid &&
                 chatWithUser.newMessages.count > 0 && (
-                  <div className="rounded-full min-w-6 min-h-6 bg-[#27b127] flex justify-center items-center">
+                  <div className="rounded-full min-w-6 min-h-6 bg-[#27b127] dark:bg-[#717579] flex justify-center items-center">
                     <span className="text-[15px] font-semibold text-white">
                       {chatWithUser.newMessages.count}
                     </span>
