@@ -40,7 +40,7 @@ export default function Register() {
 
   const handleImageUpload = useCallback(
     async (file, user) => {
-      if(!file) return await getDownloadURL(ref(storage, '/users/default_avatar.jpg'));
+      if(file.length == 0) return await getDownloadURL(ref(storage, '/users/default_avatar.jpg'));
       const storageRef = ref(storage, `/users/${user.uid}.jpg`);
       try {
         const snapshot = await uploadBytes(storageRef, file);
@@ -49,7 +49,7 @@ export default function Register() {
         console.error('Error loading image:', error);
       }
     },
-    [],
+    [storage],
   );
 
   const {
