@@ -87,7 +87,7 @@ function ChatItem({ user }) {
         selectedUser.uid == user.uid && searchTab == 'chats'
           ? 'sm:bg-[#3390EC] sm:hover:bg-[#3390EC] dark:sm:bg-indigo-600 dark:sm:hover:bg-indigo-800'
           : 'hover:bg-gray-100 dark:hover:bg-[#414040]'
-      } px-2 py-3 rounded-2xl transition-all duration-300 cursor-pointer w-[100%] relative`}
+      } px-2 py-3 rounded-2xl transition-all duration-300 cursor-pointer w-[100%] relative fade-in`}
       onClick={(e) => {
         e.preventDefault();
         if (chatWithUser) {

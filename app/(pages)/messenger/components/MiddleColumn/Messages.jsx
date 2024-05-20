@@ -93,7 +93,7 @@ function Messages() {
           <div className="md:w-4/6 w-full px-2 md:px-0 flex flex-col gap-2 items-start">
             {messagesLoading ? (
               <div className="flex justify-center items-center min-h-[450px] w-full">
-                <Loader />
+                {/* <Loader /> */}
               </div>
             ) : messages.length ? (
               messages.map((message) => (

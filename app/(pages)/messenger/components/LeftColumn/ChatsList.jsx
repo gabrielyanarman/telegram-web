@@ -12,9 +12,11 @@ import { useEffect, useState } from 'react';
 import { useGetUser } from '@/app/utils/hooks';
 
 function ChatsList() {
-  const [chatItems, setChatItems] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [currentUser] = useAuthState(auth);
+
+  const [chatItems, setChatItems] = useState([]);
   const chatsRef = collection(firestore, 'chats');
   const q = query(
     chatsRef,
