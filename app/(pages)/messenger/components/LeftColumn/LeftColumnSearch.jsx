@@ -34,7 +34,7 @@ function LeftColumnSearch() {
         type="text"
         placeholder="Search"
         value={searchValue}
-        className="bg-[#F4F4F5] pt-2 pr-[41px] pb-2 pl-[43px] rounded-2xl w-full focus:outline-none focus:outline-[#039BE5] dark:focus:outline-indigo-600"
+        className="bg-[#F4F4F5] pt-2 pr-[41px] pb-2 pl-[43px] rounded-2xl w-full focus:outline-none focus:outline-[#039BE5] dark:text-black dark:focus:outline-indigo-600"
         onFocus={() => {
           setInputFocus(true);
         }}
